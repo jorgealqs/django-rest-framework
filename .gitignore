@@ -1,0 +1,7 @@
+# Archivos generados por el sistema operativo
+*.pyc
+__pycache__/
+
+# Carpeta del entorno virtual
+venv/
+.env
