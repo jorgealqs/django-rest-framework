@@ -6,6 +6,8 @@ from core.auth.viewsets.register import CreateUserViewSet
 from core.auth.viewsets.login import LoginViewSet
 from core.auth.viewsets.refresh import RefreshViewSet
 from core.post.views import PostViewSet
+from core.post.viewsets.likeuser import LikeUser
+from core.post.viewsets.removelikeuser import RemoveLikeUser
 
 
 router = routers.SimpleRouter()
@@ -42,6 +44,8 @@ urlpatterns = [
   path("post/", PostViewSet.as_view()),
   path("post/<str:pk>/", PostViewSet.as_view()),
   path("post/<str:pk>/delete/", PostViewSet.as_view()),
+  path("post/<str:pk>/like/", LikeUser.as_view()),
+  path("post/<str:pk>/remove_like/", RemoveLikeUser.as_view()),
 
-  *router.urls,
+  # *router.urls,
 ]

@@ -7,6 +7,8 @@ from core.post.serializers import PostSerializer
 from rest_framework.exceptions import APIException
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.exceptions import NotFound
+from rest_framework.decorators import action
+from rest_framework import serializers
 
 
 class PostViewSet(AbstractViewSet):
@@ -65,5 +67,3 @@ class PostViewSet(AbstractViewSet):
             # Manejo de la excepción y devolución de una respuesta personalizada
             error_message = {"error": str(e)}
             return Response(error_message, status=status.HTTP_400_BAD_REQUEST)
-
-
