@@ -8,6 +8,9 @@ from core.auth.viewsets.refresh import RefreshViewSet
 from core.post.views import PostViewSet
 from core.post.viewsets.likeuser import LikeUser
 from core.post.viewsets.removelikeuser import RemoveLikeUser
+from core.comment.viewsets.list import CommentViewSet
+from core.comment.viewsets.get_a_comment_by_post import CommentDetailView
+
 
 
 router = routers.SimpleRouter()
@@ -46,6 +49,13 @@ urlpatterns = [
   path("post/<str:pk>/delete/", PostViewSet.as_view()),
   path("post/<str:pk>/like/", LikeUser.as_view()),
   path("post/<str:pk>/remove_like/", RemoveLikeUser.as_view()),
+  # ############################################################
+  ######### #
+  # ################### Comment ###################### #
+  # ############################################################
+  ######### #
+  path("post/<str:pk_post>/comment/", CommentViewSet.as_view()),
+  path("post/<str:pk_post>/comment/<str:pk_comment>/", CommentDetailView.as_view())
 
   # *router.urls,
 ]
