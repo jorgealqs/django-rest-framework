@@ -5,3 +5,7 @@ __pycache__/
 # Carpeta del entorno virtual
 venv/
 .env
+
+db.sqlite3
+pytest.ini
+tests.py

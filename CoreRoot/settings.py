@@ -93,10 +93,10 @@ WSGI_APPLICATION = "CoreRoot.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": os.getenv("DATABASE_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.getenv("DATABASE_NAME", "coredb"),
-        "USER": os.getenv("DATABASE_USER", "core"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD", "wCh29&HE&T83"),
-        "HOST": os.environ.get("DATABASE_HOST", "localhost"),
+        "NAME": os.getenv("DATABASE_NAME", ""),
+        "USER": os.getenv("DATABASE_USER", ""),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD", ""),
+        "HOST": os.environ.get("DATABASE_HOST", ""),
         "PORT": os.getenv("DATABASE_PORT", "5432"),
     }
 }
