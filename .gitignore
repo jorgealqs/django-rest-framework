@@ -9,3 +9,5 @@ venv/
 db.sqlite3
 pytest.ini
 tests.py
+
+user_avatars/

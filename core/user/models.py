@@ -4,6 +4,9 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from core.user.manager.manager import UserManager
 
+def user_directory_path(instance, filename):
+  # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+  return 'user_{0}/{1}'.format(instance.public_id, filename)
 
 class User(AbstractBaseUser, PermissionsMixin):
   public_id = models.UUIDField(
@@ -31,9 +34,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     null=True
   )
   avatar = models.ImageField(
-    upload_to='avatars/',
-    blank=True,
-    null=True
+    null=True, blank=True,
+    upload_to=user_directory_path
   )
   posts_liked = models.ManyToManyField(
     "core_post.Post",
@@ -66,3 +68,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Return True if the user has liked a `post`; else
     False"""
     return self.posts_liked.filter(pk=post.pk).exists()
+

@@ -30,7 +30,7 @@ urlpatterns = [
   # ############################################################
   ######### #
   path("user/", UserViewSetApiView.as_view()),
-  path("user/<str:public_id>", UserViewSetApiView.as_view()),
+  path("user/<str:public_id>/", UserViewSetApiView.as_view()),
   path("user/create/", CreateUserViewSet.as_view()),
   # ############################################################
   ######### #
@@ -46,6 +46,8 @@ urlpatterns = [
   ######### #
   path("post/", PostViewSet.as_view()),
   path("post/<str:pk>/", PostViewSet.as_view()),
+  path("post/author/<str:author_public_id>/", PostViewSet.as_view()),
+  path("post/<str:pk>/update/", PostViewSet.as_view()),
   path("post/<str:pk>/delete/", PostViewSet.as_view()),
   path("post/<str:pk>/like/", LikeUser.as_view()),
   path("post/<str:pk>/remove_like/", RemoveLikeUser.as_view()),

@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from core.abstract.viewsets import AbstractViewSet
 from core.post.models import Post
+from core.user.models import User
 from core.post.serializers import PostSerializer
 from rest_framework.exceptions import APIException
 from rest_framework.pagination import LimitOffsetPagination
@@ -33,13 +34,25 @@ class PostViewSet(AbstractViewSet):
         else:
             return Response({"error": "No post ID provided"}, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, pk=None):
-        if pk is not None:  # Si se proporciona un pk, devuelve un solo objeto
-            post = self.get_object(pk)
-            serializer = PostSerializer(post, context={'request': request})
-            return Response(serializer.data)
-        else:  # Si no se proporciona un pk, devuelve una lista paginada de objetos
+    def get(self, request, pk=None, author_public_id=None):
+        if author_public_id:
+            try:
+                author = User.objects.get(public_id=author_public_id)
+                queryset = Post.objects.filter(author=author)
+                # Aquí puedes realizar cualquier filtrado o manipulación adicional del queryset si es necesario
+            except User.DoesNotExist:
+                return Response({"error": "Author not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
             queryset = self.get_queryset()
+
+        if pk:
+            try:
+                post = queryset.get(public_id=pk)
+                serializer = PostSerializer(post, context={'request': request})
+                return Response(serializer.data)
+            except Post.DoesNotExist:
+                return Response({"error": "Post not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
             paginator = self.pagination_class()
             result_page = paginator.paginate_queryset(queryset, request)
             serializer = PostSerializer(result_page, many=True, context={'request': request})

@@ -14,11 +14,9 @@ class CommentViewSet(AbstractViewSet):
     serializer_class = CommentSerializer
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
-            return Comment.objects.all()
         post_pk = self.kwargs.get('pk_post')
         get_object_or_404(Post, public_id=post_pk)
-        queryset = Comment.objects.filter(post__public_id=post_pk)
+        queryset = Comment.objects.filter(post__public_id=post_pk).order_by('-id')
         return queryset
 
     def get(self, request, *args, **kwargs):

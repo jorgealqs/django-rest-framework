@@ -1,4 +1,5 @@
 import os
+import random
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
@@ -33,6 +34,7 @@ THIRD_APP_NAME = [
     "allauth.socialaccount",
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
 ]
 
 
@@ -58,6 +60,7 @@ INSTALLED_APPS = SYSTEM_APPS + OWN_APPS + THIRD_APP_NAME
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -156,12 +159,12 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 5,
+    'PAGE_SIZE': 50,
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=700),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=360),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,
@@ -197,3 +200,23 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://hk9bg1t1-5173.use2.devtunnels.ms",
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'user_avatars/media/')
+
+DEFAULT_AVATAR_URLS = [
+    "https://api.dicebear.com/8.x/pixel-art/svg",
+    "https://api.dicebear.com/8.x/lorelei/svg",
+    "https://api.dicebear.com/8.x/pixel-art/svg?seed=John",
+    "https://api.dicebear.com/8.x/pixel-art/svg?seed=Jane",
+    "https://api.dicebear.com/8.x/pixel-art/svg?seed=John&hair=short01,short02,short03,short04,short05",
+    "https://api.dicebear.com/8.x/pixel-art/svg?seed=Jane&hair=long01,long02,long03,long04,long05",
+]
+
+DEFAULT_AVATAR_URL = random.choice(DEFAULT_AVATAR_URLS)

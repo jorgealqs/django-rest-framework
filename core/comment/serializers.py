@@ -24,7 +24,7 @@ class CommentSerializer(AbstractSerializer):
   def update(self, instance, validated_data):
     if not instance.edited:
       validated_data['edited'] = True
-      instance = super().update(instance,validated_data)
+    instance = super().update(instance,validated_data)
     return instance
 
   def to_representation(self, instance):
